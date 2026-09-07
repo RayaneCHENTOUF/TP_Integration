@@ -13,7 +13,6 @@ jobs:
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       - run: python3 -m unittest -v
-      - run: sshpass -p "$SSH_PASSWORD" scp test_addition.py ubuntu@20.56.74.49:/home/ubuntu/CH
       - name: Test SSH
         run: |
           sshpass -p "$SSH_PASSWORD" ssh \
