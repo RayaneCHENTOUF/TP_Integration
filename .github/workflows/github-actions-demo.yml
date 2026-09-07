@@ -31,3 +31,11 @@ jobs:
           ubuntu@20.56.74.49:/home/ubuntu/CH/
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      - name: Check copied file
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh \
+          -o StrictHostKeyChecking=no \
+          ubuntu@20.56.74.49 \
+          "ls -l /home/ubuntu/CH/test_addition.py"
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
