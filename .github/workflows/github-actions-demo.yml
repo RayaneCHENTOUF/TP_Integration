@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: echo $SSH_PASSWORD >> var/ssh_pass.txt
-      - run: python3 test_addition.py
-        env:
-          SECRET_API_TOKEN: ${{ secrets.SECRET_API_TOKEN }}
-      - run: echo "Contenu de mon fichier de test" > output.txt
-      - uses: actions/upload-artifact@v4
+
+      - uses: actions/setup-python@v5
         with:
-          name: mon-fichier
-          path: output.txt
+          python-version: "3.14"
+
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      - run: python3 -m unittest -v
+      - run: sshpass -p "$SSH_PASSWORD" scp
