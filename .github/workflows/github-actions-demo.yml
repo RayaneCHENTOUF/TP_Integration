@@ -13,24 +13,13 @@ jobs:
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       - run: python3 -m unittest -v
-      - name: Test SSH
+
+      - name: Copy test_addition.py
         run: |
-          sshpass -p "$SSH_PASSWORD" ssh \
-          -o StrictHostKeyChecking=no \
-          -o ConnectTimeout=10 \
-          ubuntu@20.56.74.49 \
-          "echo Connexion SSH OK"
+          sshpass -p "$SSH_PASSWORD" scp test_addition.py ubuntu@20.56.74.49:/home/ubuntu/CH
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
 
-      - name: Test SCP
-        run: |
-          sshpass -p "$SSH_PASSWORD" scp -v \
-          -o StrictHostKeyChecking=no \
-          test_addition.py \
-          ubuntu@20.56.74.49:/home/ubuntu/CH/
-        env:
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       - name: Check copied file
         run: |
           sshpass -p "$SSH_PASSWORD" ssh \
