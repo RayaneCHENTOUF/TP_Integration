@@ -22,3 +22,12 @@ jobs:
           "echo Connexion SSH OK"
         env:
           SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+
+      - name: Check remote directory
+        run: |
+          sshpass -p "$SSH_PASSWORD" ssh \
+          -o StrictHostKeyChecking=no \
+          ubuntu@20.56.74.49 \
+          "ls -ld /home/ubuntu/CH"
+        env:
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
